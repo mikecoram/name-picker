@@ -1,0 +1,28 @@
+{
+  "name": "name-picker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run clean && npx tsc && (cd build && zip -r ../build.zip .)",
+    "clean": "rm -rf build build.zip",
+    "deploy": "npm run build && AWS_REGION=eu-west-2 ./deploy",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikecoram/name-picker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mikecoram/name-picker/issues"
+  },
+  "homepage": "https://github.com/mikecoram/name-picker#readme",
+  "devDependencies": {
+    "@aws-sdk/client-lambda": "^3.121.0",
+    "@types/aws-lambda": "^8.10.101",
+    "typescript": "^4.7.4"
+  }
+}

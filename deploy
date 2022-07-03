@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+const { LambdaClient, UpdateFunctionCodeCommand, PublishVersionCommand, UpdateAliasCommand, waitUntilFunctionUpdated } = require('@aws-sdk/client-lambda')
+const { readFile } = require('fs/promises')
+
+async function main() {
+  const functionName = 'name-picker'
+  const zipFilePath = './build.zip'
+  const zipFile = await readFile(zipFilePath)
+  const commonParams = { FunctionName: functionName }
+  const lambda = new LambdaClient()
+  await lambda.send(new UpdateFunctionCodeCommand({ ...commonParams, ZipFile: zipFile }))
+  await waitUntilFunctionUpdated({ client: lambda, maxWaitTime: 60 }, commonParams)
+  const { Version: newVersion } = await lambda.send(new PublishVersionCommand({ ...commonParams }))
+  await lambda.send(new UpdateAliasCommand({ ...commonParams, FunctionVersion: newVersion, Name: 'latest' }))
+}
+
+main().catch(err => {
+  console.error(err)
+  process.exit(1)
+})
