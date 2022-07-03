@@ -6,7 +6,7 @@ const exampleUrl = `${url}?names=bill,jill`
 export const handler = async (event: APIGatewayEvent): Promise<APIGatewayProxyResult> => {
   const { queryStringParameters } = event
 
-  if (queryStringParameters === null || queryStringParameters.names === undefined) {
+  if (queryStringParameters == null || queryStringParameters.names === undefined) {
     return {
       body: `
       <!DOCTYPE html>
