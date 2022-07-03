@@ -21,7 +21,7 @@ export const handler = async (event: APIGatewayEvent): Promise<APIGatewayProxyRe
 
   const rawNames = queryStringParameters.names
   const run = queryStringParameters["run"]
-  const names: string[] = rawNames.split(',')
+  const names = rawNames.split(',')
   const randomName = names[Math.floor(Math.random() * names.length)]
   const winnerText = `${randomName} is the winner!`
   const drawText = `These names were in the draw: ${rawNames}`
