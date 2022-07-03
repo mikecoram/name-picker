@@ -45,7 +45,7 @@ export const handler = async (event: APIGatewayEvent): Promise<APIGatewayProxyRe
       <meta property="og:site_name" content="Name Picker" />
       <meta property="og:title" content="${titleText}" />
       <meta property="og:type" content="article" />
-      <meta property="og:url" content="${url}/?names=${rawNames}${run !== undefined ? '&run=' + run : ''} />
+      <meta property="og:url" content="${url}/?names=${rawNames}${run !== undefined ? '&run=' + run : ''}" />
     </head>
     <body>
       ${winnerText}
