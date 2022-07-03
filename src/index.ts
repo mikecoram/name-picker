@@ -45,11 +45,12 @@ export const handler = async (event: APIGatewayEvent): Promise<APIGatewayProxyRe
     </head>
     <body>
       ${winnerText}
-
       <br />
       <br />
-
       ${drawText}
+      <br />
+      <br />
+      Refresh to spin again.
     </body>
     </html>`,
     headers: { 'content-type': 'text/html; charset=utf-8' },
