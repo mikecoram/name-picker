@@ -19,13 +19,19 @@ EOF
 }
 
 resource "aws_lambda_function" "name_picker" {
-  architectures = ["arm64"]
-  filename      = "../build.zip"
-  function_name = "name-picker"
-  handler       = "index.handler"
-  role          = aws_iam_role.iam_for_lambda.arn
-  runtime = "nodejs14.x"
+  architectures    = ["arm64"]
+  filename         = "../build.zip"
+  function_name    = "name-picker"
+  handler          = "index.handler"
+  role             = aws_iam_role.iam_for_lambda.arn
+  runtime          = "nodejs14.x"
   source_code_hash = filebase64sha256("../build.zip")
+
+  environment {
+    variables = {
+      url = var.hosted_url
+    }
+  }
 }
 
 # This is to optionally manage the CloudWatch Log Group for the Lambda Function.
