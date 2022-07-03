@@ -23,7 +23,7 @@ export const handler = async (event: APIGatewayEvent): Promise<APIGatewayProxyRe
   const names: string[] = rawNames.split(',')
   const randomName = names[Math.floor(Math.random() * names.length)]
   const winnerText = `${randomName} is the winner!`
-  const title = `${winnerText} - name Picker run ${Date.now()}`
+  const title = `${winnerText} - name picker run ${Date.now()}`
 
   return {
     body: `
@@ -31,8 +31,14 @@ export const handler = async (event: APIGatewayEvent): Promise<APIGatewayProxyRe
     <html prefix="og: https://ogp.me/ns#">
     <head>
       <title>${title}</title>
+      <meta property="og:locale" content="en_GB" />
+      <meta property="og:type" content="article" />
+      <meta property="og:site_name" content="Name Picker" />
+      <meta property="article:publisher" content="Name Picker" />
+      <meta property="article:published_time" content="${new Date().toISOString()}" />
+      <meta property="article:modified_time" content="${new Date().toISOString()}" />
+      <meta property="og:description" content="${winnerText}" />
       <meta property="og:title" content="${title}" />
-      <meta property="og:type" content="website" />
       <meta property="og:url" content="${url}/?${rawNames}" />
     </head>
     <body>
