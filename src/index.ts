@@ -23,6 +23,7 @@ export const handler = async (event: APIGatewayEvent): Promise<APIGatewayProxyRe
   const names: string[] = rawNames.split(',')
   const randomName = names[Math.floor(Math.random() * names.length)]
   const winnerText = `${randomName} is the winner!`
+  const drawText = `These names were in the draw: ${rawNames}`
   const title = `${winnerText} - name picker run ${Date.now()}`
 
   return {
@@ -37,7 +38,7 @@ export const handler = async (event: APIGatewayEvent): Promise<APIGatewayProxyRe
       <meta property="article:publisher" content="Name Picker" />
       <meta property="article:published_time" content="${new Date().toISOString()}" />
       <meta property="article:modified_time" content="${new Date().toISOString()}" />
-      <meta property="og:description" content="${winnerText}" />
+      <meta property="og:description" content="${winnerText} ${drawText}" />
       <meta property="og:title" content="${title}" />
       <meta property="og:url" content="${url}/?${rawNames}" />
     </head>
@@ -47,7 +48,7 @@ export const handler = async (event: APIGatewayEvent): Promise<APIGatewayProxyRe
       <br />
       <br />
 
-      These names were in the draw: ${rawNames}
+      ${drawText}
     </body>
     </html>`,
     headers: { 'content-type': 'text/html; charset=utf-8' },
