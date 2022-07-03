@@ -39,7 +39,7 @@ export const handler = async (event: APIGatewayEvent): Promise<APIGatewayProxyRe
       <meta property="og:description" content="${drawText}" />
       <meta property="og:locale" content="en_GB" />
       <meta property="og:site_name" content="Name Picker" />
-      <meta property="og:title" content="${titleText} ${run}" />
+      <meta property="og:title" content="${titleText}" />
       <meta property="og:type" content="article" />
       <meta property="og:url" content="${url}/?names=${rawNames}&run=${run}" />
     </head>
