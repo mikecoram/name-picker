@@ -36,7 +36,7 @@ export const handler = async (event: APIGatewayEvent): Promise<APIGatewayProxyRe
       <meta property="article:modified_time" content="${new Date().toISOString()}" />
       <meta property="article:published_time" content="${new Date().toISOString()}" />
       <meta property="article:publisher" content="Name Picker" />
-      <meta property="og:description" content="${winnerText} ${drawText}" />
+      <meta property="og:description" content="${drawText}" />
       <meta property="og:locale" content="en_GB" />
       <meta property="og:site_name" content="Name Picker" />
       <meta property="og:title" content="${title} ${run}" />
