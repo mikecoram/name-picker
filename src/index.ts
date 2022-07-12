@@ -1,7 +1,7 @@
 import { APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda'
 
-const url = process.env.url ?? 'not set'
-const exampleUrl = `${url}?names=bill,jill`
+const baseUrl = process.env.url ?? 'not set'
+const exampleUrl = `${baseUrl}?names=Bill,Jill`
 
 export const handler = async (event: APIGatewayEvent): Promise<APIGatewayProxyResult> => {
   const { queryStringParameters } = event
@@ -12,10 +12,13 @@ export const handler = async (event: APIGatewayEvent): Promise<APIGatewayProxyRe
       <!DOCTYPE html>
       <html>
       <body>
-        Bad Request.
-        <br />
-        <br />
-        Try something like: <a href="${exampleUrl}">${exampleUrl}</a>
+        <h1>Bad Request</h1>
+        <p>
+          Try something like: <a href="${exampleUrl}">${exampleUrl}</a>
+        </p>
+        <p>
+          <a href="https://github.com/mikecoram/name-picker">https://github.com/mikecoram/name-picker</a>
+        </p>
       </body>
       </html>`,
       headers: { 'content-type': 'text/html; charset=utf-8' },
@@ -28,8 +31,9 @@ export const handler = async (event: APIGatewayEvent): Promise<APIGatewayProxyRe
   const names = rawNames.split(',')
   const randomName = names[Math.floor(Math.random() * names.length)]
   const winnerText = `${randomName} is the winner ${run !== undefined ? `to run ${run}` : ''}`
-  const drawText = `These names were in the draw: ${rawNames}`
+  const drawText = `These names were in the draw: ${names.join(', ')}`
   const titleText = `${winnerText}`
+  const url = `${baseUrl}/?names=${rawNames}${run !== undefined ? '&run=' + run : ''}`
 
   return {
     body: `
@@ -45,16 +49,21 @@ export const handler = async (event: APIGatewayEvent): Promise<APIGatewayProxyRe
       <meta property="og:site_name" content="Name Picker" />
       <meta property="og:title" content="${titleText}" />
       <meta property="og:type" content="article" />
-      <meta property="og:url" content="${url}/?names=${rawNames}${run !== undefined ? '&run=' + run : ''}" />
+      <meta property="og:url" content="${url}" />
     </head>
     <body>
-      ${winnerText}
-      <br />
-      <br />
-      ${drawText}
-      <br />
-      <br />
-      Refresh to pick again.
+      <h1>
+        ${winnerText}
+      </h1>
+      <p>
+        ${drawText}
+      </p>
+      <p>
+        <a href="${url}">Pick again</a>
+      </p>
+      <p>
+        <a href="https://github.com/mikecoram/name-picker">https://github.com/mikecoram/name-picker</a>
+      </p>
     </body>
     </html>`,
     headers: { 'content-type': 'text/html; charset=utf-8' },
